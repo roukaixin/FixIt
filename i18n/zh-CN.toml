@@ -28,6 +28,12 @@ other = "分类"
 [categories]
 other = "分类"
 
+[collection]
+other = "合集"
+
+[collections]
+other = "合集"
+
 [tag]
 other = "标签"
 
@@ -80,9 +86,6 @@ searchPlaceholder = "搜索文章标题或内容……"
 clear = "清空"
 cancel = "取消"
 noResultsFound = "没有找到结果"
-lunrLanguageCode = "zh"
-lunrLanguageLib = "lib/lunr/lunr.zh.js"
-lunrSegmentitLib = "lib/lunr/lunr.segmentit.js"
 copyToClipboard = "复制到剪贴板"
 editLockTitle = "锁定可编辑代码块"
 editUnLockTitle = "解锁可编辑代码块"
@@ -101,13 +104,14 @@ other = "分享到"
 contents= "目录"
 repost= "转载"
 publishedOnDate= "发布于 {{ .Date }}"
-includedInCategories= "收录于 {{ .Categories }}"
 views = "次阅读"
 comments = "条评论"
 author = "作者"
 updatedOnDate = "更新于 {{ .Date }}"
 readMarkdown = "阅读原始文档"
+viewSource = "查看源码"
 editThisPage = "编辑此页"
+reportIssue = "报告问题"
 back = "返回"
 home = "主页"
 readMore = "阅读全文"
@@ -116,6 +120,12 @@ encryptedAbstract = "本文已加密，因此其原始内容不可见！"
 encryptedMessage = "请输入密码"
 password = "密码"
 encryptyAgain = "重新加密"
+relatedContent = "相关内容"
+
+[single.includedIn]
+categories = "收录于 {{ .Categories }}"
+collections = "收录于 {{ .Collections }}"
+both = "收录于 {{ .Categories }} 和 {{ .Collections }}"
 
 [single.wordCount]
 other = "{{ .Count }} 字"

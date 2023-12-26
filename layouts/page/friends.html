@@ -1,6 +1,3 @@
-{{- /* TODO remove this template */ -}}
-{{- warnf "The `type:friends` in front matter is deprecated. Use `layout:friends` instead.\n" -}}
-{{- warnf "Front matter 参数 `type:friends` 已弃用。请改用 `layout:friends`。" -}}
 {{- define "title" }}{{ .Title }} - {{ .Site.Title }}{{ end -}}
 
 {{- define "content" -}}
@@ -25,7 +22,7 @@
               <use xlink:href="#icon-{{ add 1 $index }}"></use>
             </svg>
           {{ end }}
-          <span class="friend-nickname" title="{{ $friend.nickname }}">{{ $friend.nickname }}</span>
+          <span class="friend-nickname" title="{{ $friend.nickname }}">@{{ $friend.nickname }}</span>
         </a>
       {{ end }}
     </div>

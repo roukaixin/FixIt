@@ -29,6 +29,12 @@ other = "Kategorie"
 [categories]
 other = "Kategorien"
 
+[collection]
+other = ""
+
+[collections]
+other = ""
+
 [tag]
 other = "Tag"
 
@@ -82,8 +88,6 @@ searchPlaceholder = "Suche nach Titel und Inhalt..."
 clear = "Leeren"
 cancel = "Abbrechen"
 noResultsFound = "Keine Ergebnisse gefunden"
-lunrLanguageCode = "de"
-lunrLanguageLib = "lib/lunr/lunr.de.js"
 copyToClipboard = "In Zwischenablage kopieren"
 editLockTitle = "Bearbeitbaren Codeblock sperren"
 editUnLockTitle = "Bearbeiten des Codeblocks entsperren"
@@ -102,13 +106,14 @@ other = "Teilen auf"
 contents= "Inhalt"
 repost= ""
 publishedOnDate= "veröffentlicht an {{ .Date }}"
-includedInCategories= "enthalten in {{ .Categories }}"
 views = "Aufrufe"
 comments = "Kommentare"
 author = "Autor"
 updatedOnDate = "Aktualisiert am {{ .Date }}"
 readMarkdown = "Markdown anzeigen"
+viewSource = ""
 editThisPage = "Diese Seite bearbeiten"
+reportIssue = ""
 back = "Zurück"
 home = "Startseite"
 readMore = "Mehr lesen"
@@ -117,6 +122,12 @@ encryptedAbstract = ""
 encryptedMessage = ""
 password = "Passwort"
 encryptyAgain = ""
+relatedContent = "Ähnliche Inhalte"
+
+[single.includedIn]
+categories = "enthalten in {{ .Categories }}"
+collections = "enthalten in {{ .Collections }}"
+both = "enthalten in {{ .Categories }} und {{ .Collections }}"
 
 [single.wordCount]
 one = "Ein Wort"

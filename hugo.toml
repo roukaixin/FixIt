@@ -69,7 +69,7 @@ enableEmoji = true
     title = ""
     weight = 2
     [menu.main.params]
-      icon = "fa-solid fa-th"
+      icon = "fa-solid fa-folder-tree"
   [[menu.main]]
     identifier = "tags"
     pre = ""
@@ -95,8 +95,6 @@ enableEmoji = true
   keywords = ["Hugo", "FixIt"]
   # site default theme ["light", "dark", "auto"]
   defaultTheme = "auto"
-  # public git repo url only then enableGitInfo is true
-  gitRepo = ""
   # FixIt 0.1.1 | NEW which hash function used for SRI, when empty, no SRI is used
   # ["sha256", "sha384", "sha512", "md5"]
   fingerprint = ""
@@ -108,6 +106,8 @@ enableEmoji = true
   enablePWA = false
   # FixIt 0.2.14 | NEW whether to add external Icon for external links automatically
   externalIcon = false
+  # FixIt 0.3.0 | NEW whether to reverse the order of the navigation menu
+  navigationReverse = false
   # FixIt 0.2.14 | NEW FixIt will, by default, inject a theme meta tag in the HTML head on the home page only.
   # You can turn it off, but we would really appreciate if you don’t, as this is a good way to watch FixIt's popularity on the rise.
   disableThemeInject = false
@@ -118,6 +118,17 @@ enableEmoji = true
     email = ""
     link = ""
     avatar = ""
+
+  # FixIt 0.3.0 | NEW public Git repository information only then enableGitInfo is true
+  [params.gitInfo]
+    # e.g. "https://github.com/hugo-fixit/docs"
+    repo = ""
+    branch = "main"
+    # the content directory path relative to the root of the repository
+    dir = "content"
+    # the issue template for reporting issue of the posts
+    # available template params: {title} {URL} {sourceURL}
+    issueTpl = "title=[BUG]%20{title}&body=|Field|Value|%0A|-|-|%0A|Title|{title}|%0A|URL|{URL}|%0A|Filename|{sourceURL}|"
 
   # FixIt 0.2.0 | NEW App icon config
   [params.app]
@@ -139,8 +150,8 @@ enableEmoji = true
   # FixIt 0.2.0 | NEW Search config
   [params.search]
     enable = false
-    # type of search engine ["lunr", "algolia", "fuse"]
-    type = "lunr"
+    # type of search engine ["algolia", "fuse"]
+    type = "fuse"
     # max index length of the chunked content
     contentLength = 4000
     # placeholder of the search bar
@@ -398,6 +409,8 @@ enableEmoji = true
     hiddenFromSearch = false
     # FixIt 0.2.18-lts.5 | NEW whether to hide a page from RSS feed
     hiddenFromRss = false
+    # FixIt 0.3.0 | NEW whether to hide a page from related posts
+    hiddenFromRelated = false
     # FixIt 0.2.0 | NEW whether to enable twemoji
     twemoji = false
     # whether to enable lightgallery
@@ -411,8 +424,14 @@ enableEmoji = true
     fontawesome = true
     # license info (HTML format is supported)
     license = '<a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>'
-    # whether to show link to Raw Markdown content of the content
+    # whether to show link to Raw Markdown content of the post
     linkToMarkdown = true
+    # FixIt 0.3.0 | NEW whether to show link to view source code of the post
+    linkToSource = true
+    # FixIt 0.3.0 | NEW whether to show link to edit the post
+    linkToEdit = true
+    # FixIt 0.3.0 | NEW whether to show link to report issue for the post
+    linkToReport = true
     # FixIt 0.2.4 | NEW whether to show the full text content in RSS
     rssFullText = false
     # FixIt 0.2.13 | NEW Page style ["narrow", "normal", "wide", ...]
@@ -428,6 +447,10 @@ enableEmoji = true
     endFlag = ""
     # FixIt 0.2.18 | NEW whether to enable instant.page
     instantPage = false
+    # FixIt 0.3.0 | NEW whether to enable collection list at the sidebar
+    collectionList = false
+    # FixIt 0.3.0 | NEW whether to enable collection navigation at the end of the post
+    collectionNavigation = false
 
     # FixIt 0.2.15 | NEW Repost config
     [params.page.repost]
@@ -452,6 +475,19 @@ enableEmoji = true
       warning = 180
       # If the article expires, close the comment or not
       closeComment = false
+    # FixIt 0.3.0 | NEW page heading config
+    [params.page.heading]
+      # used with `markup.tableOfContents.ordered` parameter
+      [params.page.heading.number]
+        # whether to enable auto heading numbering
+        enable = false
+        [params.page.heading.number.format]
+          h1 = "{title}"
+          h2 = "{h2} {title}"
+          h3 = "{h2}.{h3} {title}"
+          h4 = "{h2}.{h3}.{h4} {title}"
+          h5 = "{h2}.{h3}.{h4}.{h5} {title}"
+          h6 = "{h2}.{h3}.{h4}.{h5}.{h6} {title}"
     # FixIt 0.2.16 | CHANGED KaTeX mathematical formulas (https://katex.org)
     [params.page.math]
       enable = true
@@ -473,13 +509,6 @@ enableEmoji = true
       edit = true
       # the maximum number of lines of displayed code by default
       maxShownLines = 10
-    # FixIt 0.2.14 | NEW Post edit
-    [params.page.edit]
-      enable = false
-      # FixIt 0.2.15 | CHANGED Link for fork & edit
-      # url = "/edit/branch-name/subdirectory-name" # base on `params.gitRepo`
-      # url = "https://github.com/user-name/repo-name/edit/branch-name/subdirectory-name" # full url
-      url = ""
     # FixIt 0.2.0 | NEW Mapbox GL JS config (https://docs.mapbox.com/mapbox-gl-js)
     [params.page.mapbox]
       # access token of Mapbox GL JS
@@ -695,6 +724,11 @@ enableEmoji = true
         name = ""
         logoUrl = ""
 
+    # FixIt 0.3.0 | NEW Related content config (https://gohugo.io/content-management/related/)
+    [params.page.related]
+      enable = false
+      count = 5
+
   # FixIt 0.2.5 | NEW TypeIt config
   [params.typeit]
     # typing speed between each step (measured in milliseconds)
@@ -727,8 +761,6 @@ enableEmoji = true
     content = ""
     # watermark's transparency
     opacity = 0.1
-    # parent of watermark's container
-    appendTo = ".wrapper>main"
     # watermark's width. unit: px
     width = 150
     # watermark's height. unit: px
@@ -876,6 +908,45 @@ enableEmoji = true
       type = "vConsole"
 
 # -------------------------------------------------------------------------------------
+# Related content Configuration
+# See: https://gohugo.io/content-management/related/
+# -------------------------------------------------------------------------------------
+
+[related]
+  includeNewer = false
+  threshold = 80
+  toLower = false
+[[related.indices]]
+  applyFilter = false
+  cardinalityThreshold = 0
+  name = 'keywords'
+  pattern = ''
+  toLower = false
+  type = 'basic'
+  weight = 100
+[[related.indices]]
+  applyFilter = false
+  cardinalityThreshold = 0
+  name = 'date'
+  pattern = ''
+  toLower = false
+  type = 'basic'
+  weight = 10
+[[related.indices]]
+  applyFilter = false
+  cardinalityThreshold = 0
+  name = 'tags'
+  pattern = ''
+  toLower = false
+  type = 'basic'
+  weight = 80
+[[related.indices]]
+  applyFilter = false
+  name = 'fragmentrefs'
+  type = 'fragments'
+  weight = 80
+
+# -------------------------------------------------------------------------------------
 # Modules Configuration
 # See: https://gohugo.io/hugo-modules/configuration/#module-config-imports
 # -------------------------------------------------------------------------------------
@@ -883,7 +954,7 @@ enableEmoji = true
 [module]
   [module.hugoVersion]
     extended = true
-    min = "0.110.0"
+    min = "0.111.0"
 
 # -------------------------------------------------------------------------------------
 # Markup related configuration in Hugo
@@ -916,6 +987,7 @@ enableEmoji = true
       unsafe = true
   # Table Of Contents settings
   [markup.tableOfContents]
+    ordered = false
     startLevel = 2
     endLevel = 6
 
@@ -991,3 +1063,13 @@ enableEmoji = true
   section = ["HTML", "RSS"]
   taxonomy = ["HTML"]
   term = ["HTML", "RSS"]
+
+# -------------------------------------------------------------------------------------
+# Taxonomies Configuration
+# See: https://gohugo.io/content-management/taxonomies/#configure-taxonomies
+# -------------------------------------------------------------------------------------
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+  collection = "collections"

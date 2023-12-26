@@ -29,6 +29,12 @@ other = "Kategoria"
 [categories]
 other = "Kategorie"
 
+[collection]
+other = ""
+
+[collections]
+other = ""
+
 [tag]
 other = "Tag"
 
@@ -82,7 +88,6 @@ searchPlaceholder = "Wyszukaj tytuł lub treść artykułu ..."
 clear = "Pusty"
 cancel = "Anuluj"
 noResultsFound = "Nie znaleziono wyników"
-lunrLanguageCode = "pl"
 copyToClipboard = "Skopiuj do schowka"
 editLockTitle = "Zablokuj edytowalny blok kodu"
 editUnLockTitle = "Odblokuj edytowalny blok kodu"
@@ -101,13 +106,14 @@ other = "Udostępnij na"
 contents= "Spis treści"
 repost= ""
 publishedOnDate= "opublikowano {{ .Date }}"
-includedInCategories= "zawarty w {{ .Categories }}"
 views = "wyświetleń"
 comments = "komentarzy"
 author = "Autor"
 updatedOnDate = "Zaktualizowano {{ .Date }}"
 readMarkdown = "Zobacz Markdown"
+viewSource = ""
 editThisPage = "Edytuj tą stronę"
+reportIssue = ""
 back = "Wstecz"
 home = "Strona główna"
 readMore = "Czytaj więcej"
@@ -116,6 +122,12 @@ encryptedAbstract = ""
 encryptedMessage = ""
 password = "Hasło"
 encryptyAgain = ""
+relatedContent = "Powiązane treści"
+
+[single.includedIn]
+categories = "zawarty w {{ .Categories }}"
+collections = "zawarty w {{ .Collections }}"
+both = "zawarty w {{ .Categories }} i {{ .Collections }}"
 
 [single.wordCount]
 one = "Jedno słowo"

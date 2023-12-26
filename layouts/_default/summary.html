@@ -18,7 +18,7 @@
   {{- end -}}
 
   {{- /* Title */ -}}
-  <h1 class="single-title" itemprop="name headline">
+  <h2 class="single-title" itemprop="name headline">
     {{ $repost := $params.repost | default dict }}
     {{- with $repost -}}
       {{- if eq .Enable true -}}
@@ -28,7 +28,7 @@
       {{- end -}}
     {{- end -}}
     <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-  </h1>
+  </h2>
 
   {{- /* Meta */ -}}
   <div class="post-meta">
@@ -40,16 +40,7 @@
       </span>
     {{- end -}}
 
-    {{- $categories := slice -}}
-    {{- range .Params.categories -}}
-      {{- $category := partialCached "function/path.html" . . | printf "/categories/%v" | $.Site.GetPage -}}
-      {{- $categories = $categories | append (printf `<a href="%v">%v %v</a>` (partial "function/escapeurl.html" $category.RelPermalink) (dict "Class" "fa-regular fa-folder fa-fw" | partial "plugin/icon.html") $category.Title) -}}
-    {{- end -}}
-    {{- with delimit $categories "&ensp;" -}}
-      &nbsp;<span class="post-category">
-        {{- dict "Categories" . | T "single.includedInCategories" | safeHTML -}}
-      </span>
-    {{- end -}}
+    {{- partial "single/post-included-in.html" . -}}
   </div>
 
   {{- /* Summary content */ -}}
@@ -64,14 +55,12 @@
   {{- /* Footer */ -}}
   <div class="post-footer">
     <a href="{{ .RelPermalink }}">{{ T "single.readMore" }}</a>
-    {{- with .Params.tags -}}
+    {{- $tagTerms := .GetTerms "tags" -}}
+    {{- if $tagTerms -}}
       <div class="post-tags">
         {{- dict "Class" "fa-solid fa-tags fa-fw me-1" | partial "plugin/icon.html" -}}
-        {{- range $value := . -}}
-          {{- $tag := partialCached "function/path.html" $value $value | printf "/tags/%v" | $.Site.GetPage -}}
-          {{- with $tag -}}
-            <a href='{{ partial "function/escapeurl.html" .RelPermalink }}' class="post-tag">{{ .Title }}</a>
-          {{- end -}}
+        {{- range $tagTerms -}}
+          <a href='{{ partial "function/escapeurl.html" .RelPermalink }}' class="post-tag">{{ .LinkTitle }}</a>
         {{- end -}}
       </div>
     {{- end -}}

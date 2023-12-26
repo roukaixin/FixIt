@@ -1,61 +1,4 @@
-class Util {
-  forEach(elements, handler) {
-    elements = elements || [];
-    for (let i = 0; i < elements.length; i++) {
-      handler(elements[i]);
-    }
-  }
-
-  getScrollTop() {
-    return (document.documentElement ?? document.body).scrollTop;
-  }
-
-  isMobile() {
-    return window.matchMedia('only screen and (max-width: 680px)').matches;
-  }
-
-  isTocStatic() {
-    return window.matchMedia('only screen and (max-width: 960px)').matches;
-  }
-
-  /**
-   * add animate to element
-   * @param {Element} element animate element
-   * @param {String|Array<String>} animation animation name
-   * @param {Boolean} reserved reserved animation
-   * @param {Function} callback remove callback
-   */
-  animateCSS(element, animation, reserved, callback) {
-    !Array.isArray(animation) && (animation = [animation]);
-    element.classList.add('animate__animated', ...animation);
-    element.addEventListener('animationend', () => {
-      !reserved && element.classList.remove('animate__animated', ...animation);
-      typeof callback === 'function' && callback();
-    }, { once: true });
-  }
-
-  /**
-   * date validator
-   * @param {*} date may be date or not
-   * @returns {Boolean}
-   */
-  isValidDate(date) {
-    return date instanceof Date && !isNaN(date.getTime());
-  }
-  
-  /**
-   * scroll some element into view
-   * @param {String} selector element to scroll
-   */
-  scrollIntoView(selector) {
-    const element = selector.startsWith('#')
-      ? document.getElementById(selector.slice(1))
-      : document.querySelector(selector);
-    element?.scrollIntoView({
-      behavior: 'smooth'
-    });
-  }
-}
+import Util from './util';
 
 class FixIt {
   constructor() {
@@ -255,74 +198,7 @@ class FixIt {
               $searchClear.style.display = 'inline';
               callback(results);
             };
-            if (searchConfig.type === 'lunr') {
-              const search = () => {
-                if (lunr.queryHandler) {
-                  query = lunr.queryHandler(query);
-                }
-                const results = {};
-                this._index.search(query).forEach(({ ref, matchData: { metadata } }) => {
-                  const matchData = this._indexData[ref];
-                  let { uri, title, content: context } = matchData;
-                  if (results[uri]) {
-                    return;
-                  }
-                  let position = 0;
-                  Object.values(metadata).forEach(({ content }) => {
-                    if (content) {
-                      const matchPosition = content.position[0][0];
-                      if (matchPosition < position || position === 0) {
-                        position = matchPosition;
-                      }
-                    }
-                  });
-                  position -= snippetLength / 5;
-                  if (position > 0) {
-                    position += context.substr(position, 20).lastIndexOf(' ') + 1;
-                    context = '...' + context.substr(position, snippetLength);
-                  } else {
-                    context = context.substr(0, snippetLength);
-                  }
-                  Object.keys(metadata).forEach((key) => {
-                    title = title.replace(new RegExp(`(${key})`, 'gi'), `<${highlightTag}>$1</${highlightTag}>`);
-                    context = context.replace(new RegExp(`(${key})`, 'gi'), `<${highlightTag}>$1</${highlightTag}>`);
-                  });
-                  results[uri] = {
-                    uri: uri,
-                    title: title,
-                    date: matchData.date,
-                    context: context
-                  };
-                });
-                return Object.values(results).slice(0, maxResultLength);
-              };
-              if (!this._index) {
-                fetch(searchConfig.lunrIndexURL)
-                  .then((response) => response.json())
-                  .then((data) => {
-                    const indexData = {};
-                    this._index = lunr(function () {
-                      if (searchConfig.lunrLanguageCode) this.use(lunr[searchConfig.lunrLanguageCode]);
-                      this.ref('objectID');
-                      this.field('title', { boost: 50 });
-                      this.field('tags', { boost: 20 });
-                      this.field('categories', { boost: 20 });
-                      this.field('content', { boost: 10 });
-                      this.metadataWhitelist = ['position'];
-                      data.forEach((record) => {
-                        indexData[record.objectID] = record;
-                        this.add(record);
-                      });
-                    });
-                    this._indexData = indexData;
-                    finish(search());
-                  })
-                  .catch((err) => {
-                    console.error(err);
-                    finish([]);
-                  });
-              } else finish(search());
-            } else if (searchConfig.type === 'algolia') {
+            if (searchConfig.type === 'algolia') {
               this._algoliaIndex =
                 this._algoliaIndex || algoliasearch(searchConfig.algoliaAppID, searchConfig.algoliaSearchKey).initIndex(searchConfig.algoliaIndex);
               this._algoliaIndex
@@ -428,17 +304,11 @@ class FixIt {
                       icon: '<i class="fa-brands fa-algolia fa-fw" aria-hidden="true"></i>',
                       href: 'https://www.algolia.com/'
                     }
-                  : (searchConfig.type === 'lunr'
-                      ? {
-                          searchType: 'Lunr.js',
-                          icon: '',
-                          href: 'https://lunrjs.com/'
-                        }
-                      : {
-                          searchType: 'Fuse.js',
-                          icon: '',
-                          href: 'https://fusejs.io/'
-                        })
+                  : {
+                      searchType: 'Fuse.js',
+                      icon: '',
+                      href: 'https://fusejs.io/'
+                    }
               return `<div class="search-footer">Search by <a href="${href}" rel="noopener noreferrer" target="_blank">${icon} ${searchType}</a></div>`;
             }
           }
@@ -453,34 +323,14 @@ class FixIt {
         this._searchDesktop = autosearch;
       }
     };
-    if (searchConfig.lunrSegmentitURL && !document.getElementById('lunr-segmentit')) {
-      const script = document.createElement('script');
-      script.id = 'lunr-segmentit';
-      script.src = searchConfig.lunrSegmentitURL;
-      script.async = true;
-      if (script.readyState) {
-        script.onreadystatechange = () => {
-          if (script.readyState == 'loaded' || script.readyState == 'complete') {
-            script.onreadystatechange = null;
-            initAutosearch();
-          }
-        };
-      } else {
-        script.onload = () => {
-          initAutosearch();
-        };
-      }
-      document.body.appendChild(script);
-    } else {
-      initAutosearch();
-    }
+    initAutosearch();
   }
 
   initBreadcrumb() {
     const $breadcrumbContainer = document.querySelector('.breadcrumb-container.sticky')
     this.breadcrumbHeight = $breadcrumbContainer?.clientHeight ?? 0;
     if (this.breadcrumbHeight) {
-      document.querySelector('#content')?.style.setProperty('--fi-breadcrumb-height', `${this.breadcrumbHeight}px`);
+      document.querySelector('main.container')?.style.setProperty('--fi-breadcrumb-height', `${this.breadcrumbHeight}px`);
     }
   }
 
@@ -610,14 +460,6 @@ class FixIt {
     });
   }
 
-  initHeaderLink() {
-    for (let num = 1; num <= 6; num++) {
-      this.util.forEach(document.querySelectorAll('.single .content > h' + num), ($header) => {
-        $header.classList.add('header-link');
-        $header.insertAdjacentHTML('afterbegin', `<a href="#${$header.id}" class="header-mark"></a>`);
-      });
-    }
-  }
   /**
    * init table of contents
    */
@@ -632,7 +474,7 @@ class FixIt {
       $tocCore.parentElement.replaceChild($newTocCore, $tocCore);
       $tocCore = $newTocCore;
     }
-    if (document.getElementById('toc-static').dataset.kept === true || this.util.isTocStatic()) {
+    if (document.getElementById('toc-static').dataset.kept === 'true' || this.util.isTocStatic()) {
       const $tocContentStatic = document.getElementById('toc-content-static');
       if ($tocCore.parentElement !== $tocContentStatic) {
         $tocCore.parentElement.removeChild($tocCore);
@@ -652,7 +494,7 @@ class FixIt {
       $toc.style.marginTop = `${$postMeta.offsetTop + $postMeta.clientHeight}px`;
       const $tocLinkElements = $tocCore.querySelectorAll('a:first-child');
       const $tocLiElements = $tocCore.getElementsByTagName('li');
-      const $headerLinkElements = document.getElementsByClassName('header-link');
+      const $headingElements = document.getElementsByClassName('heading-element');
       const headerHeight = document.getElementById('header-desktop').offsetHeight;
       document.querySelector('.container').addEventListener('resize', () => {
         $toc.style.marginBottom = `${document.querySelector('.container').clientHeight - document.querySelector('.post-footer').offsetTop}px`;
@@ -666,10 +508,10 @@ class FixIt {
           $tocLi.classList.remove('has-active');
         });
         const INDEX_SPACING = 20 + (document.body.dataset.headerDesktop !== 'normal' ? headerHeight : 0) + this.breadcrumbHeight;
-        let activeTocIndex = $headerLinkElements.length - 1;
-        for (let i = 0; i < $headerLinkElements.length - 1; i++) {
-          const thisTop = $headerLinkElements[i].getBoundingClientRect().top;
-          const nextTop = $headerLinkElements[i + 1].getBoundingClientRect().top;
+        let activeTocIndex = $headingElements.length - 1;
+        for (let i = 0; i < $headingElements.length - 1; i++) {
+          const thisTop = $headingElements[i].getBoundingClientRect().top;
+          const nextTop = $headingElements[i + 1].getBoundingClientRect().top;
           if ((i == 0 && thisTop > INDEX_SPACING) || (thisTop <= INDEX_SPACING && nextTop > INDEX_SPACING)) {
             activeTocIndex = i;
             break;
@@ -1041,7 +883,7 @@ class FixIt {
     this.config.watermark?.enable &&
       new Watermark({
         content: this.config.watermark.content || `${document.querySelector('footer .fixit-icon')?.outerHTML ?? ''} FixIt Theme`,
-        appendTo: this.config.watermark.appendto || '.wrapper>main',
+        appendTo: '.widgets',
         opacity: this.config.watermark.opacity,
         width: this.config.watermark.width,
         height: this.config.watermark.height,
@@ -1080,7 +922,6 @@ class FixIt {
         this.initLightGallery();
         this.initHighlight();
         this.initTable();
-        this.initHeaderLink();
         this.initMath();
         this.initMermaid();
         this.initEcharts();
@@ -1308,7 +1149,6 @@ class FixIt {
         this.initLightGallery();
         this.initHighlight();
         this.initTable();
-        this.initHeaderLink();
         this.initMath();
         this.initMermaid();
         this.initEcharts();

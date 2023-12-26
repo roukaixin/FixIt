@@ -17,6 +17,8 @@
         content: '|';
         font-weight: bolder;
         margin-right: 0.5rem;
+        position: relative;
+        bottom: 2px;
         color: $single-link-color;
 
         [data-theme='dark'] & {
@@ -25,7 +27,24 @@
       }
 
       ul {
-        padding-left: 1.5rem;
+        padding-left: 1rem;
+      }
+    }
+
+    ol {
+      margin: 0;
+      padding-left: 2.25rem;
+
+      ol {
+        padding-left: 1.25rem;
+      }
+
+      li:has(> a:hover)::marker {
+        color: $single-link-color;
+
+        [data-theme='dark'] & {
+          color: $single-link-color-dark;
+        }
       }
     }
   }
@@ -50,10 +69,9 @@
 #toc-auto {
   display: block;
   position: sticky;
-  top: var(--#{$prefix}scroll-mt);
+  top: calc(#{$header-height} + var(--#{$prefix}breadcrumb-height));
   box-sizing: border-box;
   visibility: hidden;
-  @include z-index(1);
   @include overflow-wrap(break-word);
   @include blur;
   @extend .print-d-none;
@@ -63,7 +81,7 @@
   }
 
   .toc-title {
-    margin: 0.5rem 0;
+    margin-block: 0 0.5rem;
     cursor: pointer;
     @include user-select(none);
 
@@ -71,6 +89,8 @@
       content: '|';
       font-weight: bolder;
       margin-right: 0.5rem;
+      position: relative;
+      bottom: 2px;
       color: $global-border-color;
 
       [data-theme='dark'] & {
@@ -96,7 +116,8 @@
       width: 0;
     }
 
-    &.always-active ul {
+    &.always-active ul,
+    &.always-active ol {
       display: block;
     }
 
@@ -104,6 +125,29 @@
       margin: 0;
     }
 
+    li.has-active {
+      &::marker {
+        color: $single-link-color;
+
+        [data-theme='dark'] & {
+          color: $single-link-color-dark;
+        }
+      }
+
+      &:has(> .active)::marker {
+        font-weight: bold;
+      }
+
+      > a {
+        color: $single-link-color;
+
+        [data-theme='dark'] & {
+          color: $single-link-color-dark;
+        }
+      }
+    }
+
+    // for unordered list automatically collapsed
     ul {
       ul {
         display: none;
@@ -112,23 +156,29 @@
       .has-active > ul {
         display: block;
       }
-    }
 
-    a.active {
-      font-weight: bold;
-      color: $single-link-color;
-
-      [data-theme='dark'] & {
-        color: $single-link-color-dark;
-      }
-
-      &::before {
+      a.active::before {
         color: $single-link-hover-color;
 
         [data-theme='dark'] & {
           color: $single-link-hover-color-dark;
         }
       }
+    }
+
+    // for ordered list automatically collapsed
+    ol {
+      ol {
+        display: none;
+      }
+
+      .has-active > ol {
+        display: block;
+      }
+    }
+
+    a.active {
+      font-weight: bold;
     }
   }
 }
@@ -156,9 +206,33 @@
   .toc-content {
     background-color: $code-background-color;
 
-    > nav > ul {
-      margin: 0;
-      padding: 0.4rem 1rem 0.4rem 1.8rem;
+    > nav {
+      > ul {
+        margin: 0;
+        padding: 0.4rem 1rem 0.4rem 1.8rem;
+
+        a:hover {
+          font-weight: bold;
+
+          &::before {
+            color: $single-link-hover-color;
+  
+            [data-theme='dark'] & {
+              color: $single-link-hover-color-dark;
+            }
+          }
+        }
+      }
+      
+      > ol {
+        margin: 0;
+        padding: 0.4rem 1rem 0.4rem 2.25rem;
+
+        li:has(> a:hover)::marker,
+        a:hover {
+          font-weight: bold;
+        }
+      }
     }
 
     [data-theme='dark'] & {

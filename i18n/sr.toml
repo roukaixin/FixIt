@@ -29,6 +29,12 @@ other = "Категорија"
 [categories]
 other = "Категорије"
 
+[collection]
+other = ""
+
+[collections]
+other = ""
+
 [tag]
 other = "Таг"
 
@@ -82,7 +88,6 @@ searchPlaceholder = "Претражи наслове или садржај..."
 clear = "Очисти"
 cancel = "Поништи"
 noResultsFound = "Без резултата"
-lunrLanguageCode = "sr"
 copyToClipboard = "Копирај на радну таблу"
 editLockTitle = "Закључај блок кода који се може уређивати"
 editUnLockTitle = "Откључајте блок кода који се може уређивати"
@@ -101,13 +106,14 @@ other = "Подели на"
 contents= "Садржаји"
 repost= ""
 publishedOnDate= "објављено {{ .Date }}"
-includedInCategories= "укључено {{ .Categories }}"
 views = "прегледа"
 comments = "коментари"
 author = "Аутор"
 updatedOnDate = "Ажурирано {{ .Date }}"
 readMarkdown = "Читај Markdown"
+viewSource = ""
 editThisPage = "Уреди ову страницу"
+reportIssue = ""
 back = "Назад"
 home = "Почетна"
 readMore = "Прочитај више"
@@ -116,6 +122,12 @@ encryptedAbstract = ""
 encryptedMessage = ""
 password = "Паролица"
 encryptyAgain = ""
+relatedContent = "Повезани садржај"
+
+[single.includedIn]
+categories = "укључено {{ .Categories }}"
+collections = "укључено {{ .Collections }}"
+both = "укључено {{ .Categories }} и {{ .Collections }}"
 
 [single.wordCount]
 one = "Једна реч"

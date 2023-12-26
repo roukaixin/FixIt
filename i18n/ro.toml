@@ -29,6 +29,12 @@ other = "Categorie"
 [categories]
 other = "Categorii"
 
+[collection]
+other = ""
+
+[collections]
+other = ""
+
 [tag]
 other = "Etichetă"
 
@@ -82,8 +88,6 @@ searchPlaceholder = "Căutarea titlului sau conținutului articolului ..."
 clear = "Golire"
 cancel = "Anulare"
 noResultsFound = "Nici un rezultat gasit"
-lunrLanguageCode = "ro"
-lunrLanguageLib = "lib/lunr/lunr.ro.js"
 copyToClipboard = "Copiați în clipboard"
 editLockTitle = "Blocați blocul de cod editabil"
 editUnLockTitle = "Deblocați blocul de cod editabil"
@@ -102,13 +106,14 @@ other = "Distribuie pe"
 contents= "Cuprins"
 repost= ""
 publishedOnDate= "publicat la {{ .Date }}"
-includedInCategories= "inclus în {{ .Categories }}"
 views = "vizualizări"
 comments = "comentarii"
 author = "Autor"
 updatedOnDate = "Actualizat la {{ .Date }}"
 readMarkdown = "Citire Markdown"
+viewSource = ""
 editThisPage = "Editați această pagină"
+reportIssue = ""
 back = "Înapoi"
 home = "Acasă"
 readMore = "Citește mai mult"
@@ -117,6 +122,12 @@ encryptedAbstract = ""
 encryptedMessage = ""
 password = "Parolă"
 encryptyAgain = ""
+relatedContent = "Conținut înrudit"
+
+[single.includedIn]
+categories = "inclus în {{ .Categories }}"
+collections = "inclus în {{ .Collections }}"
+both = "inclus în {{ .Categories }} și {{ .Collections }}"
 
 [single.wordCount]
 one = "Un cuvânt"

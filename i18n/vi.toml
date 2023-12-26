@@ -28,6 +28,12 @@ other = "Danh mục"
 [categories]
 other = "Danh mục"
 
+[collection]
+other = ""
+
+[collections]
+other = ""
+
 [tag]
 other = "Nhãn"
 
@@ -81,8 +87,6 @@ searchPlaceholder = "Tìm tiêu đề hoặc nội dung..."
 clear = "Xoá"
 cancel = "Huỷ"
 noResultsFound = "Không tìm thấy"
-lunrLanguageCode = "vi"
-lunrLanguageLib = "lib/lunr/lunr.vi.js"
 copyToClipboard = "Sao chép vào bộ nhớ tạm"
 editLockTitle = "Khóa khối mã có thể chỉnh sửa"
 editUnLockTitle = "Mở khóa khối mã có thể chỉnh sửa"
@@ -101,13 +105,14 @@ other = "Chia sẻ trên"
 contents= "Nội dung"
 repost= ""
 publishedOnDate= "đăng ngày {{ .Date }}"
-includedInCategories= "trong {{ .Categories }}"
 views = "lượt xem"
 comments = "bình luận"
 author = "Tác giả"
 updatedOnDate = "Cập nhật ngày {{ .Date }}"
 readMarkdown = "Đọc với định dạng Markdown"
+viewSource = ""
 editThisPage = "Chỉnh sửa trang này"
+reportIssue = ""
 back = "Quay lại"
 home = "Trang chủ"
 readMore = "Đọc thêm"
@@ -116,6 +121,12 @@ encryptedAbstract = ""
 encryptedMessage = ""
 password = "Mật khẩu"
 encryptyAgain = ""
+relatedContent = "Nội dung liên quan"
+
+[single.includedIn]
+categories = "trong {{ .Categories }}"
+collections = "trong {{ .Collections }}"
+both = "trong {{ .Categories }} và {{ .Collections }}"
 
 [single.wordCount]
 one = "One word"
