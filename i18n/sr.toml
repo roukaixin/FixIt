@@ -20,6 +20,9 @@ noscript = ""
 # === baseof ===
 
 # === Taxonomy ===
+[archives]
+other = ""
+
 [allSome]
 other = "Све {{ .Some }}"
 
@@ -50,6 +53,10 @@ other = "Постови"
 recentlyUpdated = "Недавно Ажурирано"
 
 [section.totalWordCount]
+one = ""
+other = ""
+
+[section.archiveCounter]
 one = ""
 other = ""
 # === Section ===

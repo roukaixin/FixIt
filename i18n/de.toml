@@ -20,6 +20,9 @@ noscript = ""
 # === baseof ===
 
 # === Taxonomy ===
+[archives]
+other = ""
+
 [allSome]
 other = "Alle {{ .Some }}"
 
@@ -50,6 +53,10 @@ other = "Artikel"
 recentlyUpdated = "Zuletzt aktualisiert"
 
 [section.totalWordCount]
+one = ""
+other = ""
+
+[section.archiveCounter]
 one = ""
 other = ""
 # === Section ===

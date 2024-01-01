@@ -19,6 +19,9 @@ noscript = ""
 # === baseof ===
 
 # === Taxonomy ===
+[archives]
+other = ""
+
 [allSome]
 other = "Tất cả {{ .Some }}"
 
@@ -49,6 +52,10 @@ other = "Bài viết"
 recentlyUpdated = "Mới nhất"
 
 [section.totalWordCount]
+one = ""
+other = ""
+
+[section.archiveCounter]
 one = ""
 other = ""
 # === Section ===
