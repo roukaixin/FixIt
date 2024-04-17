@@ -1,6 +1,8 @@
 # =====================================================================================
 # It's recommended to use Alternate Theme Config to configure FixIt
 # Modifying this file may result in merge conflict
+# There are currently some restrictions to what a theme component can configure:
+# params, menu, outputformats and mediatypes
 # =====================================================================================
 
 # -------------------------------------------------------------------------------------
@@ -696,6 +698,8 @@ enableEmoji = true
       [params.page.heading.number]
         # whether to enable auto heading numbering
         enable = false
+        # FixIt 0.3.3 | NEW only enable in main section pages (default is posts)
+        onlyMainSection = true
         [params.page.heading.number.format]
           h1 = "{title}"
           h2 = "{h2} {title}"

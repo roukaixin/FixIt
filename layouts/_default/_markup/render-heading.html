@@ -1,5 +1,5 @@
 {{- /* Read the config and format */ -}}
-{{- $params := .Page.Scratch.Get "params" -}}
+{{- $params := partial "function/params.html" -}}
 {{- $h1Format := $params.heading.number.format.h1 | default "{title}" -}}
 {{- $h2Format := $params.heading.number.format.h2 | default "{h2} {title}" -}}
 {{- $h3Format := $params.heading.number.format.h3 | default "{h2}.{h3} {title}" -}}
@@ -15,7 +15,10 @@
 <h{{ .Level }} id="{{ .Anchor | safeURL }}" class="heading-element">
   <a href="#{{ .Anchor | safeURL }}" class="heading-mark"></a>
 
-  {{- if $params.heading.number.enable -}}
+
+  {{- /* Only enable in main section pages */ -}}
+  {{- $onlyMainSection := cond $params.heading.number.onlyMainSection (eq .Page.Type "posts") true -}}
+  {{- if $params.heading.number.enable | and $onlyMainSection -}}
     {{- /* Add 1 to the current level */ -}}
     {{- $headingMap := .Page.Scratch.Get "heading-counter" -}}
     {{- $count := (string .Level) | index $headingMap | int | add 1 -}}
