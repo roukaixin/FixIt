@@ -3,7 +3,6 @@ import Util from './util';
 class FixIt {
   constructor() {
     this.config = window.config;
-    this.data = this.config.data || [];
     this.isDark = document.body.dataset.theme === 'dark';
     this.util = new Util();
     this.newScrollTop = this.util.getScrollTop();
@@ -386,8 +385,13 @@ class FixIt {
         // code title
         const $title = document.createElement('span');
         $title.classList.add('code-title');
-        const hlAttrs = this.data[$chroma.parentNode.id];
-        $title.insertAdjacentHTML('afterbegin', `<i class="arrow fa-solid fa-chevron-right fa-fw" aria-hidden="true"></i><span class="title-inner">${hlAttrs?.title ?? ''}</span>`);
+        // insert code title inner
+        $title.insertAdjacentHTML(
+          'afterbegin',
+          $chroma.parentNode.title
+            ? `<i class="arrow fa-solid fa-chevron-right fa-fw" aria-hidden="true"></i><span class="title-inner">${$chroma.parentNode.title}</span>`
+            : '<i class="arrow fa-solid fa-chevron-right fa-fw" aria-hidden="true"></i>'
+        );
         $title.addEventListener('click', () => {
           $chroma.classList.toggle('open');
         }, false);
@@ -581,11 +585,14 @@ class FixIt {
         this._echartsArr[i].dispose();
       }
       this._echartsArr = [];
+      const stagingDOM = this.util.getStagingDOM()
       this.util.forEach(document.getElementsByClassName('echarts'), ($echarts) => {
         const chart = echarts.init($echarts, this.isDark ? 'dark' : 'light', { renderer: 'svg' });
-        chart.setOption(JSON.parse(this.data[$echarts.id]));
+        stagingDOM.stage($echarts.querySelector('template').content.cloneNode(true));
+        chart.setOption(stagingDOM.contentAsJson());
         this._echartsArr.push(chart);
       });
+      stagingDOM.destroy();
     });
     this.switchThemeEventSet.add(this._echartsOnSwitchTheme);
     this._echartsOnSwitchTheme();
@@ -603,7 +610,7 @@ class FixIt {
       mapboxgl.setRTLTextPlugin(this.config.mapbox.RTLTextPlugin);
       this._mapboxArr = this._mapboxArr || [];
       this.util.forEach(document.getElementsByClassName('mapbox'), ($mapbox) => {
-        const { lng, lat, zoom, lightStyle, darkStyle, marked, navigation, geolocate, scale, fullscreen } = this.data[$mapbox.id];
+        const { lng, lat, zoom, lightStyle, darkStyle, marked, navigation, geolocate, scale, fullscreen } = JSON.parse($mapbox.dataset.options);
         const mapbox = new mapboxgl.Map({
           container: $mapbox,
           center: [lng, lat],
@@ -642,7 +649,7 @@ class FixIt {
       this._mapboxOnSwitchTheme = this._mapboxOnSwitchTheme || (() => {
         this.util.forEach(this._mapboxArr, (mapbox) => {
           const $mapbox = mapbox.getContainer();
-          const { lightStyle, darkStyle } = this.data[$mapbox.id];
+          const { lightStyle, darkStyle } = JSON.parse($mapbox.dataset.options);
           mapbox.setStyle(this.isDark ? darkStyle : lightStyle);
           mapbox.addControl(new MapboxLanguage());
         });
@@ -658,18 +665,38 @@ class FixIt {
       const cursorSpeed = typeitConfig.cursorSpeed || 1000;
       const cursorChar = typeitConfig.cursorChar || '|';
       const loop = typeitConfig.loop ?? false;
-      Object.values(typeitConfig.data).forEach((group) => {
+      // divide them into different groups according to the data-group attribute value of the element
+      // results in an object like {group1: [ele1, ele2], group2: [ele3, ele4]}
+      const typeitElements = document.querySelectorAll('.typeit')
+      const groupMap = Array.from(typeitElements).reduce((acc, ele) => {
+        const group = ele.dataset.group || ele.id || Math.random().toString(36).substring(2);
+        acc[group] = acc[group] || [];
+        acc[group].push(ele);
+        return acc;
+      }, {});
+      const stagingDOM = this.util.getStagingDOM()
+
+      Object.values(groupMap).forEach((group) => {
         const typeone = (i) => {
-          const id = group[i];
-          const shortcodeLoop = document.querySelector(`#${id}`).parentElement.dataset.loop;
-          const instance = new TypeIt(`#${id}`, {
-            strings: this.data[id],
+          const typeitElement = group[i];
+          const singleLoop = typeitElement.dataset.loop;
+          stagingDOM.stage(typeitElement.querySelector('template').content.cloneNode(true));
+          // for shortcodes usage
+          let targetEle = typeitElement.firstElementChild
+          // for system elements usage
+          if (typeitElement.firstElementChild.tagName === 'TEMPLATE') {
+            typeitElement.innerHTML = '';
+            targetEle = typeitElement
+          }
+          // create a new instance of TypeIt for each element
+          const instance = new TypeIt(targetEle, {
+            strings: stagingDOM.$el.querySelector('pre')?.innerHTML || stagingDOM.contentAsHtml(),
             speed: speed,
             lifeLike: true,
             cursorSpeed: cursorSpeed,
             cursorChar: cursorChar,
             waitUntilVisible: true,
-            loop: shortcodeLoop ? JSON.parse(shortcodeLoop) : loop,
+            loop: singleLoop ? JSON.parse(singleLoop) : loop,
             afterComplete: () => {
               if (i === group.length - 1) {
                 if (typeitConfig.duration >= 0) {
@@ -686,6 +713,7 @@ class FixIt {
         };
         typeone(0);
       });
+      stagingDOM.destroy();
     }
   }
 
