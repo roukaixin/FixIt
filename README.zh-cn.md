@@ -6,7 +6,7 @@
 
 👉 [English README](README.md) | 简体中文说明
 
-[FixIt](https://github.com/hugo-fixit/FixIt) 是一个**简洁**、**优雅**且**高效**的 [Hugo](https://gohugo.io/) 博客主题。[]
+[FixIt](https://github.com/hugo-fixit/FixIt) 是一个**简洁**、**优雅**且**高效**的 [Hugo](https://gohugo.io/) 博客主题。
 
 它的原型基于 [LoveIt 主题](https://github.com/dillonzq/LoveIt)，[KeepIt 主题](https://github.com/Fastbyte01/KeepIt) 和 [LeaveIt 主题](https://github.com/liuzc/LeaveIt)。[^1]
 
@@ -100,6 +100,10 @@
 - 支持基于 [pangu.js](https://github.com/vinta/pangu.js) 的**中文排版**
 - 支持本地**缓存远程图床图片**
 - ……
+
+### 主题组件
+
+FixIt 主题旨在在 **简洁性** 和 **可扩展性** 之间取得平衡。为此，我们开发了一系列额外的 [Hugo 主题组件](https://fixit.lruihao.cn/zh-cn/components/) 供用户选择。
 
 ## 多语言和国际化
 

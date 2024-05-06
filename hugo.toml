@@ -930,6 +930,7 @@ enableEmoji = true
         reactionsEnabled = "1"
         emitMetadata = "0"
         inputPosition = "bottom" # ["top", "bottom"]
+        lang = ""
         lightTheme = "light"
         darkTheme = "dark"
         lazyLoad = true
@@ -1073,7 +1074,7 @@ enableEmoji = true
     # FixIt 0.2.18 | NEW Depends on the author's email, if the author's email is not set, the local avatar will be used
     enable = false
     # Gravatar host, default: "www.gravatar.com"
-    host = "www.gravatar.com" # ["cn.gravatar.com", "gravatar.loli.net", ...]
+    host = "www.gravatar.com" # ["cravatar.cn", "gravatar.loli.net", ...]
     style = "" # ["", "mp", "identicon", "monsterid", "wavatar", "retro", "blank", "robohash"]
 
   # FixIt 0.2.16 | NEW Back to top
@@ -1114,12 +1115,12 @@ enableEmoji = true
     # footer = "custom/footer.html"
 
   # FixIt 0.2.15 | NEW Developer options
+  # Select the scope named `public_repo` to generate personal access token,
+  # Configure with environment variable `HUGO_PARAMS_GHTOKEN=xxx`, see https://gohugo.io/functions/os/getenv/#examples
   [params.dev]
     enable = false
     # Check for updates
     c4u = false
-    # Please do not expose to public!
-    githubToken = ""
     # Mobile Devtools config
     [params.dev.mDevtools]
       enable = false
