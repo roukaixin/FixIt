@@ -90,7 +90,7 @@ To see this theme in action, here are some [live demo sites](https://fixit.lruih
 - **Interactive data visualization** shortcode supported by [ECharts](https://echarts.apache.org/)
 - **Mapbox** shortcode supported by [Mapbox GL JS](https://docs.mapbox.com/mapbox-gl-js)
 - **Music player** shortcode supported by [APlayer](https://github.com/MoePlayer/APlayer) and [MetingJS](https://github.com/metowolf/MetingJS)
-- **Bilibili player** shortcode
+- **Bilibili player** and **Douyin player** shortcode
 - Kinds of **admonitions** shortcode
 - **Custom style** shortcode
 - **Custom script** shortcode
@@ -99,6 +99,7 @@ To see this theme in action, here are some [live demo sites](https://fixit.lruih
 - **Web Watermark** supported by [cell-watermark](https://github.com/Lruihao/watermark)
 - **Chinese typesetting** supported by [pangu.js](https://github.com/vinta/pangu.js)
 - Options to **cache remote image** locally
+- High **extensibility**
 - ...
 
 ### Theme Components
@@ -122,13 +123,12 @@ FixIt supports the following languages:
 - Russian
 - Romanian
 - Vietnamese
+- Hindi
 - [Contribute with a new language](https://github.com/hugo-fixit/FixIt/pulls)
 
 [Languages Compatibility](https://fixit.lruihao.cn/documentation/basics/#language-compatibility)
 
 ## [Roadmap](https://github.com/hugo-fixit/FixIt/projects/1)
-
-## [Changelog](/CHANGELOG.md)
 
 ## Questions, ideas, bugs, pull requests
 
@@ -142,9 +142,9 @@ Make sure that you follow [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) while contrib
 
 **When contributing, please first discuss the change you wish to make via an issue on this repository before making the actual change**.
 
-## [Contributors](contributors.md)
-
 ## Acknowledgements
+
+Thanks to all the [contributors](https://github.com/hugo-fixit/FixIt/graphs/contributors) for their support!
 
 <details>
 <summary>Thanks to the authors of following resources included in the theme:</summary>

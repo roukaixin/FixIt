@@ -90,7 +90,7 @@
 - 支持基于 [ECharts](https://echarts.apache.org/) 的**交互式数据可视化** shortcode
 - 支持基于 [Mapbox GL JS](https://docs.mapbox.com/mapbox-gl-js) 的 **Mapbox** shortcode
 - 支持基于 [APlayer](https://github.com/MoePlayer/APlayer) 和 [MetingJS](https://github.com/metowolf/MetingJS) 的**音乐播放器** shortcode
-- 支持 **Bilibili 视频** shortcode
+- 支持 **Bilibili 视频** 和 **抖音视频** shortcode
 - 支持多种**注释**的 shortcode
 - 支持**自定义样式**的 shortcode
 - 支持**自定义脚本**的 shortcode
@@ -99,6 +99,7 @@
 - 支持基于 [cell-watermark](https://github.com/Lruihao/watermark) 的**网页水印**
 - 支持基于 [pangu.js](https://github.com/vinta/pangu.js) 的**中文排版**
 - 支持本地**缓存远程图床图片**
+- 高**扩展性**
 - ……
 
 ### 主题组件
@@ -122,13 +123,12 @@ FixIt 支持下列语言：
 - 俄语
 - 罗马尼亚语
 - 越南语
+- 印地语
 - [贡献一种新的语言](https://github.com/hugo-fixit/FixIt/pulls)
 
 [语言兼容性](https://fixit.lruihao.cn/zh-cn/theme-documentation-basics/#language-compatibility)
 
 ## [路线图](https://github.com/hugo-fixit/FixIt/projects/1)
-
-## [更新日志](/CHANGELOG.md)
 
 ## 问题、想法、bugs 和 PRs
 
@@ -142,13 +142,13 @@ FixIt 支持下列语言：
 
 **贡献时，请先通过此存储库上的问题讨论你希望进行的更改，然后再进行实际更改**。
 
-## [所有贡献者](contributors.md)
-
 ## 镜像
 
 - Gitee 镜像仓库：<https://gitee.com/lruihao/FixIt>
 
 ## 致谢
+
+感谢 [所有贡献者](https://github.com/hugo-fixit/FixIt/graphs/contributors) 的支持！
 
 <details>
 <summary>FixIt 主题中用到了以下项目，感谢它们的作者：</summary>
