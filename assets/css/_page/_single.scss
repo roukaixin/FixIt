@@ -170,7 +170,8 @@
         font-size: inherit;
       }
 
-      &:hover {
+      &:hover,
+      &:target {
         > .heading-mark {
           opacity: 1;
         }
@@ -257,13 +258,10 @@
 
     .table-wrapper {
       overflow-x: auto;
+      --#{$prefix}scrollbar-thumb-color: #{$table-background-color};
 
-      &::-webkit-scrollbar {
-        background-color: $table-background-color;
-
-        [data-theme='dark'] & {
-          background-color: $table-background-color-dark;
-        }
+      [data-theme='dark'] & {
+        --#{$prefix}scrollbar-thumb-color: #{$table-background-color-dark};
       }
 
       > table {
